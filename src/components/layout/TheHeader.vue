@@ -8,10 +8,10 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a href="/" class="navbar-brand">
-          <span class="title">{{ logo.title }}</span>
+        <router-link to="/" class="navbar-brand">
+            <span class="title">{{ logo.title }}</span>
           <img :src="logo.src" :alt="logo.title">
-        </a>
+        </router-link>
       </div>
 
       <div id="top-navbar-collapse" :class="['collapse', 'navbar-collapse', { in: showCollapsedNav }]">
@@ -20,6 +20,11 @@
             <a href="#" @click="changeNavIndex(index)">{{ item }}</a>
           </li>
         </ul>
+
+        <!-- 入口组件 -->
+        <div class="navbar-right">
+            <TheEntry/>
+        </div>
       </div>  
 
     </div>
@@ -27,6 +32,7 @@
 </template>
 
 <script>
+import TheEntry from '@/components/layout/TheEntry.vue'
 export default {
   name: 'TheHeader',
   data() {
@@ -50,6 +56,9 @@ export default {
     toggleNav() {
       this.showCollapsedNav = !this.showCollapsedNav
     }
+  },
+  components: {
+      TheEntry
   }
 }
 </script>
