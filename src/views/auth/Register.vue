@@ -1,6 +1,7 @@
 <template>
   <div class="row">
     <div class="col-md-4 col-md-offset-4 floating-box">
+      <!-- 消息组件 -->
       <Message :show.sync="msgShow" :type="msgType" :msg="msg"/>
       <div class="panel panel-default">
         <div class="panel-heading">
@@ -24,9 +25,9 @@
             <label class="control-label">图片验证码</label>
             <input v-model.trim="captcha" v-validator.required="{ title: '图片验证码' }" type="text" class="form-control" placeholder="请填写验证码">
           </div>
-            <div class="thumbnail" title="点击图片重新获取验证码" @click="getCaptcha">
-              <div class="captcha vcenter" v-html="captchaTpl"></div>
-            </div>
+          <div class="thumbnail" title="点击图片重新获取验证码" @click="getCaptcha">
+            <div class="captcha vcenter" v-html="captchaTpl"></div>
+          </div>
           <button type="submit" class="btn btn-lg btn-success btn-block" @click="register">
             <i class="fa fa-btn fa-sign-in"></i> 注册
           </button>
@@ -67,7 +68,6 @@ export default {
     register(e) {
       this.$nextTick(() => {
         const target = e.target.type === 'submit' ? e.target : e.target.parentElement
-
         if (target.canSubmit) {
           this.submit()
         }
@@ -83,7 +83,9 @@ export default {
           password: this.password,
           avatar: `https://api.adorable.io/avatars/200/${this.username}.png`
         }
-        const localUser = ls.getItem('user')
+        // const localUser = ls.getItem('user')
+        
+        const localUser = this.$store.state.user
 
         if (localUser) {
           if (localUser.name === user.name) {
@@ -97,7 +99,8 @@ export default {
       }
     },
     login(user) {
-      ls.setItem('user', user)
+      // ls.setItem('user', user)
+      this.$store.dispatch('login', user)
       this.showMsg('注册成功', 'success')
     },
     showMsg(msg, type = 'warning') {
